@@ -40,7 +40,7 @@ and even restore the pending messages if rabbit stops running and is restored la
                 If the callback doesn't raise any exception we confirm eveything is fine and the message will be removed from the queue.
         
   The tests for this classes are more **integration test** rather than unit tests.
-  I create a rabbit instance with docker and destroy it for every test, which is slow.
+  I created a rabbit instance with docker and destroy it for every test, which is slow.
   An alternative would have been having a testing instance of rabbit, but I think this would be easier for you to run.
 
 * **reporters.py**: This classes are the ones in charge of sending the information to wherever we need, in the
