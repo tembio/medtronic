@@ -1,9 +1,9 @@
 ### HOW TO RUN
 
-1. Download rabbitmq Docker image: 
+1. Download RabbitMQ Docker image: 
         `docker pull rabbitmq:3-management`
 
-2. Start rabbitmq: 
+2. Start RabbitMQ: 
         `docker run --rm --name rabbitTest -it  -p 15679:15672 -p 5679:5672 rabbitmq:3-management`
 
 3. Install Pika:
