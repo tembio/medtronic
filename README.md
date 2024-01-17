@@ -19,28 +19,28 @@
 
 ### SOLUTION
 
-I decided to use RabitMQ to send the sensors information using a queue.
+I decided to use RabbitMQ to send the sensors information using a queue.
 The sensors send the message to the Rabbit queue, then that message is sent to
 a worker that sends the message via http to the specified endpoint.
 
-Rabbit takes care of resending the messages than haven't been acknowledged, 
-and even restore the pending messages if rabbit stops running and is restored later.
+Rabbit resends the messages than haven't been acknowledged, 
+and even recovers the pending messages if the Rabbit instance stops running and is restored later.
 
 
 ### CODE STRUCTURE
 
-* **sensor.py**: Provided file with the implementation of a Sensor that s ends information periodically
+* **sensor.py**: Provided file with the implementation of a Sensor that sends information periodically
 
 * **rabbitWrapper.py**: This is a wrapper for Pika (the python lib to use RabbitMQ).There two classes in this file:
-  * **Producer**: is in charger of sending messages to the queue. 
+  * **Producer**: is in charge of sending messages to the queue. 
                 It is marked as persistent, which means that if Rabbit goes down, the pending messages won't be lost.
   * **Consumer**: This is the worker that receives messages and process them.
                 We use a callback to specify what to do with the messages. 
                 If the callback raises an exception the message will be marked as not processed and retried later (NACK)
                 If the callback doesn't raise any exception we confirm eveything is fine and the message will be removed from the queue.
         
-  The tests for this classes are more **integration test** rather than unit tests.
-  I created a rabbit instance with docker and destroy it for every test, which is slow.
+  The tests for these classes are more **integration test** rather than unit tests.
+  I create a rabbit instance with docker and destroy it for every test, which is slow.
   An alternative would have been having a testing instance of rabbit, but I think this would be easier for you to run.
 
 * **reporters.py**: This classes are the ones in charge of sending the information to wherever we need, in the
